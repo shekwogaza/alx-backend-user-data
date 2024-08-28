@@ -8,6 +8,8 @@ import os
 import mysql.connector
 from typing import List
 
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
@@ -92,3 +94,22 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return connection
+
+
+def main():
+    """Retrieve and display all rows from the users table."""
+    logger = get_logger()
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users;")
+
+    for row in cursor:
+        filtered_row = '; '.join(f"{k}={v}" for k, v in row.items())
+        logger.info(filtered_row)
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
