@@ -7,9 +7,6 @@ from typing import List
 import re
 
 
-
-
-
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
     """
