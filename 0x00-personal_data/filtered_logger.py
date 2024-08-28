@@ -51,3 +51,21 @@ def filter_datum(fields: List[str],
     return re.sub(
         f'({"|".join(map(re.escape, fields))})=([^{separator}]*)',
         f'\\1={redaction}', message)
+
+
+def get_logger() -> logging.Logger:
+    """_summary_
+
+    Returns:
+        logging.Logger: _description_
+    """
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+
+    logger.addHandler(stream_handler)
+
+    return logger
