@@ -3,8 +3,10 @@
 
 
 import logging
-from typing import List
 import re
+import os
+import mysql.connector
+from typing import List
 
 
 class RedactingFormatter(logging.Formatter):
@@ -69,3 +71,24 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """_summary_
+
+    Returns:
+        mysql.connector.connection.MySQLConnection: _description_
+    """
+    username = os.environ.get("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.environ.get("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.environ.get("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.environ.get("PERSONAL_DATA_DB_NAME")
+
+    connection = mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=db_name
+    )
+
+    return connection
