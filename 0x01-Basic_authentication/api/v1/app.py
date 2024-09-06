@@ -2,6 +2,7 @@
 """
 Route module for the API
 """
+
 from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
@@ -23,8 +24,9 @@ def not_found(error) -> str:
 
 
 @app.errorhandler(401)
-def unauthorized_error(error) -> tuple[str, Literal[401]]:
-    """Handle 401 Unauthorized errors"""
+def unauthorized_error(error) ->str:
+    """Handle 401 Unauthorized errors
+    """
     return jsonify({"error": "Unauthorized"}), 401
 
 

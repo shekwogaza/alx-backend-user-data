@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ Module of Index views
 """
+
 from flask import jsonify, abort
 from api.v1.views import app_views
 
@@ -27,5 +28,6 @@ def stats() -> str:
 
 @app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
 def unauthorized() -> str:
-    """Endpoint to trigger a 401 Unauthorized error"""
+    """Endpoint to trigger a 401 Unauthorized error
+    """
     abort(401)
