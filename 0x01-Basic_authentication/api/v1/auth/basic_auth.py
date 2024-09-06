@@ -68,12 +68,12 @@ class BasicAuth(Auth):
         Extracts user credentials from the decoded Base64 string.
 
         Args:
-            decoded_base64_authorization_header (str): Decoded Base64
-            string in the format "email:password".
+            decoded_base64_authorization_header (str): Decoded Base64 string 
+                                                    in the format "email:password".
 
         Returns:
-            (str, str): Tuple of user email and password, or
-            (None, None) if any conditions are not met.
+            (str, str): Tuple of user email and password, or (None, None) if 
+                        any conditions are not met.
         """
         if decoded_base64_authorization_header is None:
             return None, None
@@ -81,11 +81,16 @@ class BasicAuth(Auth):
         if not isinstance(decoded_base64_authorization_header, str):
             return None, None
 
-        if ':' not in decoded_base64_authorization_header:
+        # Find the first occurrence of ':'
+        delimiter_index = decoded_base64_authorization_header.find(':')
+        if delimiter_index == -1:
             return None, None
 
-        email, password = decoded_base64_authorization_header.split(':', 1)
+        email = decoded_base64_authorization_header[:delimiter_index]
+        password = decoded_base64_authorization_header[delimiter_index + 1:]
+
         return email, password
+
 
     def user_object_from_credentials(self,
                                      user_email: str, user_pwd:
