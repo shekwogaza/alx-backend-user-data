@@ -14,8 +14,7 @@ class Auth:
 
         Args:
             path (str): The path to check.
-            excluded_paths (List[str]): List of paths that don't
-            require authentication.
+            excluded_paths (List[str]): List of paths that don't require authentication.
 
         Returns:
             bool: True if authentication is required, False otherwise.
@@ -30,9 +29,11 @@ class Auth:
 
         for excluded_path in excluded_paths:
             if excluded_path.endswith('*'):
-                if path.startswith(excluded_path[:-1]):
+                # Handle wildcard paths
+                pattern = excluded_path.rstrip('*')
+                if path.startswith(pattern):
                     return False
-            elif path == excluded_path:
+            elif path == excluded_path.rstrip('/'):
                 return False
 
         return True
