@@ -24,7 +24,7 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
 @app.errorhandler(404)
-def not_found(error):
+def not_found(error) -> str:
     """
     Not found handler
 
@@ -40,7 +40,7 @@ def not_found(error):
 
 
 @app.errorhandler(401)
-def unauthorized_error(error):
+def unauthorized_error(error) -> str:
     """
     Handle 401 Unauthorized errors
 
