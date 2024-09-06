@@ -1,6 +1,8 @@
-#!/usr/bin/env python3
-"""
-Route module for the API
+#!/usr/bin/python3
+"""Route module for the API
+
+Returns:
+    _type_: _description_
 """
 
 from os import getenv
@@ -30,7 +32,7 @@ def not_found(error) -> str:
 
 
 @app.errorhandler(401)
-def unauthorized_error(error) -> tuple[str, Literal[401]]:
+def unauthorized_error(error) -> str:
     """Handle 401 Unauthorized errors
 
     Args:
