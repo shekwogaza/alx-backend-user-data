@@ -7,15 +7,19 @@ from api.v1.auth.auth import Auth
 class BasicAuth(Auth):
     """BasicAuth class to manage API basic authentication."""
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self,
+                                            authorization_header: str) -> str:
         """
-        Extracts the Base64 part of the Authorization header for Basic Authentication.
+        Extracts the Base64 part of the Authorization
+        header for Basic Authentication.
 
         Args:
-            authorization_header (str): The Authorization header from the request.
+            authorization_header (str): The Authorization
+            header from the request.
 
         Returns:
-            str: The Base64 part of the header or None if conditions are not met.
+            str: The Base64 part of the header or
+            None if conditions are not met.
         """
         if authorization_header is None:
             return None
