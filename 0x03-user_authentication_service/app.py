@@ -8,10 +8,12 @@ app.url_map.strict_slashes = False
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 AUTH = Auth()
 
+
 @app.route("/")
 def home() -> str:
     """Home endpoint"""
     return jsonify({"message": "Bienvenue"})
+
 
 @app.route("/sessions", methods=["POST"])
 def login():
@@ -25,6 +27,7 @@ def login():
     response.set_cookie("session_id", session_id)
     return response
 
+
 @app.route("/sessions", methods=["DELETE"])
 def logout():
     """Logout endpoint"""
@@ -34,6 +37,7 @@ def logout():
         abort(403)
     AUTH.destroy_session(user.id)
     return redirect(url_for("home"))
+
 
 @app.route("/users", methods=["POST"])
 def users():
@@ -46,6 +50,7 @@ def users():
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
+
 @app.route("/profile")
 def profile() -> str:
     """User profile endpoint"""
@@ -54,6 +59,7 @@ def profile() -> str:
     if not user:
         abort(403)
     return jsonify({"email": user.email})
+
 
 @app.route("/reset_password", methods=["POST"])
 def get_reset_password_token() -> str:
@@ -64,6 +70,7 @@ def get_reset_password_token() -> str:
     except ValueError:
         abort(403)
     return jsonify({"email": email, "reset_token": reset_token})
+
 
 @app.route("/reset_password", methods=["PUT"])
 def update_password():
@@ -76,6 +83,7 @@ def update_password():
     except ValueError:
         abort(403)
     return jsonify({"email": email, "message": "Password updated"})
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
